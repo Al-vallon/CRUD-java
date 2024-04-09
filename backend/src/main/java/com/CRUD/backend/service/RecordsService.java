@@ -6,7 +6,6 @@ import com.CRUD.backend.exceptions.AppException;
 import com.CRUD.backend.mappers.GymRecordMapper;
 import com.CRUD.backend.repository.GymRecordsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +18,7 @@ public class RecordsService {
     private final GymRecordMapper gymRecordMapper;
 
     public List<GymRecordDTO> allRecords() {
+
         return gymRecordMapper.toGymRecordDTOS(gymRecordsRepository.findAll());
     }
 
@@ -36,5 +36,16 @@ public class RecordsService {
         return  gymRecordDTO;
     }
 
+
+    public GymRecordDTO putGymRecord(Long id,GymRecordDTO gymRecordDTO) {
+        GymRecord gymRecord = gymRecordsRepository.findById(id)
+                .orElseThrow(() -> new AppException("Gym status doesn't found", HttpStatus.NOT_FOUND));
+
+        gymRecordMapper.putGymRecord(gymRecord,gymRecordDTO);
+
+        GymRecord savedGymRecord = gymRecordsRepository.save(gymRecord);
+
+        return gymRecordMapper.toGymRecordDTO(savedGymRecord);
+    }
 
 }

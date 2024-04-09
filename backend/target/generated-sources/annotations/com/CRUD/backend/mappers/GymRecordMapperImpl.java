@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-04-08T14:36:56+0200",
+    date = "2024-04-09T13:13:18+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Amazon.com Inc.)"
 )
 @Component
@@ -57,5 +57,15 @@ public class GymRecordMapperImpl implements GymRecordMapper {
         }
 
         return list;
+    }
+
+    @Override
+    public void putGymRecord(GymRecord gymRecord, GymRecordDTO gymRecordDTO) {
+        if ( gymRecordDTO == null ) {
+            return;
+        }
+
+        gymRecord.setExercise( gymRecordDTO.getExercise() );
+        gymRecord.setWeight( gymRecordDTO.getWeight() );
     }
 }
